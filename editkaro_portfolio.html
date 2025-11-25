@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editkaro.in - Social Media Marketing & Video Editing Agency</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #6c3ce3;
+            --secondary-color: #ff006e;
+            --accent-color: #00d4ff;
+            --dark-bg: #0a0e27;
+            --light-text: #f0f0f0;
+            --card-bg: #1a1f3a;
+            --border-color: #2a2f4a;
+            --success-color: #00ff88;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--light-text);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Header/Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a0f3a 50%, var(--dark-bg) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--primary-color), transparent);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--secondary-color), transparent);
+            border-radius: 50%;
+            bottom: -150px;
+            left: -150px;
+            opacity: 0.1;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInDown 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #b0b0b0;
+            animation: slideInUp 0.8s ease 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            cursor: pointer;
+            animation: slideInUp 0.8s ease 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(108, 60, 227, 0.4);
+        }
+
+        /* Portfolio Section */
+        .portfolio-section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Filter Buttons */
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            color: var(--light-text);
+            cursor: pointer;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: capitalize;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-color: transparent;
+            color: white;
+        }
+
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .portfolio-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid var(--border-color);
+            animation: fadeIn 0.6s ease;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+        }
+
+        .portfolio-card.hidden {
+            display: none;
+        }
+
+        .portfolio-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-thumbnail::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .portfolio-info {
+            padding: 1.5rem;
+        }
+
+        .portfolio-category {
+            color: var(--accent-color);
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .portfolio-description {
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: rgba(108, 60, 227, 0.2);
+            color: var(--accent-color);
+            padding: 0.3rem 0.7rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Modal/Lightbox */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--accent-color);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--secondary-color);
+        }
+
+        .modal-header {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-body {
+            color: #b0b0b0;
+            line-height: 1.8;
+        }
+
+        .video-embed {
+            width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            margin: 1rem 0;
+            background: var(--dark-bg);
+        }
+
+        /* Animations */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(20px);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(26, 31, 58, 0.5);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: #b0b0b0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .footer-social a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            nav {
+                padding: 0.75rem 1rem;
+            }
+
+            .filter-container {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 70vh;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .cta-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .portfolio-section {
+                padding: 3rem 1rem;
+            }
+
+            nav ul {
+                gap: 0.5rem;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>EDITKARO.IN</h1>
+            <p>Transform Your Vision Into Viral Content</p>
+            <p style="color: #888; font-size: 1rem; margin-bottom: 2rem;">
+                Professional Video Editing & Social Media Marketing Excellence
+            </p>
+            <button class="cta-button" onclick="scrollToSection('portfolio')">Explore Our Work</button>
+        </div>
+    </section>
+
+    <!-- Portfolio Section with Filters -->
+    <section class="portfolio-section" id="portfolio">
+        <h2 class="section-title">Our Amazing Portfolio</h2>
+        <p class="section-subtitle">Crafted with precision and creativity for maximum impact</p>
+
+        <div class="filter-container">
+            <button class="filter-btn active" onclick="filterPortfolio('all')">All</button>
+            <button class="filter-btn" onclick="filterPortfolio('short-form')">Short-Form Videos</button>
+            <button class="filter-btn" onclick="filterPortfolio('long-form')">Long-Form Videos</button>
+            <button class="filter-btn" onclick="filterPortfolio('gaming')">Gaming Videos</button>
+            <button class="filter-btn" onclick="filterPortfolio('football')">Football Edits</button>
+            <button class="filter-btn" onclick="filterPortfolio('ecommerce')">eCommerce Ads</button>
+            <button class="filter-btn" onclick="filterPortfolio('documentary')">Documentary</button>
+            <button class="filter-btn" onclick="filterPortfolio('color-grading')">Color Grading</button>
+            <button class="filter-btn" onclick="filterPortfolio('anime')">Anime Videos</button>
+        </div>
+
+        <div class="portfolio-grid" id="portfolioGrid">
+            <!-- Portfolio items will be dynamically generated here -->
+        </div>
+    </section>
+
+    <!-- Video Modal/Lightbox -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3 class="modal-header" id="modalTitle"></h3>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h3>Get In Touch</h3>
+            <p style="margin: 1rem 0;">Let's create something extraordinary together</p>
+            <div class="footer-social">
+                <a href="https://instagram.com" target="_blank">Instagram</a>
+                <a href="https://youtube.com" target="_blank">YouTube</a>
+                <a href="https://facebook.com" target="_blank">Facebook</a>
+                <a href="mailto:contact@editkaro.in">Email</a>
+            </div>
+            <p style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                © 2025 Editkaro.in - All rights reserved. | Created with <span style="color: var(--secondary-color);">❤</span> for amazing clients
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Convert various video URL formats to embed URL
+        function convertToEmbedUrl(url) {
+            if (!url) return '';
+            
+            // If already an embed URL, return as is
+            if (url.includes('/embed/')) return url;
+            
+            // YouTube regular URL
+            if (url.includes('youtu.be/')) {
+                const videoId = url.split('youtu.be/')[1].split('?')[0];
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            
+            // YouTube shorts
+            if (url.includes('youtube.com/shorts/')) {
+                const videoId = url.split('/shorts/')[1].split('?')[0];
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            
+            // YouTube standard with v= parameter
+            if (url.includes('youtube.com') && url.includes('v=')) {
+                const videoId = url.split('v=')[1].split('&')[0];
+                return `https://www.youtube.com/embed/${videoId}`;
+            }
+            
+            // If it's already in proper format, return as is
+            return url;
+        }
+
+        // Portfolio Data
+        const portfolioData = [
+            {
+                id: 1,
+                title: "Viral TikTok Series",
+                category: "short-form",
+                description: "Trending short-form content that went viral with 2M+ views",
+                icon: "🎬",
+                details: "This trending short-form video series was optimized for TikTok's algorithm and achieved viral status within 48 hours.",
+                videoUrl: "https://youtu.be/ZyQaVHOu_Wk",
+                tags: ["Trending", "Viral", "TikTok"]
+            },
+            {
+                id: 2,
+                title: "Instagram Reels Pack",
+                category: "short-form",
+                description: "Collection of 15 Instagram reels with consistent branding",
+                icon: "📱",
+                details: "A complete set of Instagram reels designed for maximum engagement and shareability.",
+                videoUrl: "https://www.instagram.com/reel/DROTf1dDO8c/?igsh=MjN5MmNna2Jxc2w1",
+                tags: ["Instagram", "Reels", "Branding"]
+            },
+            {
+                id: 3,
+                title: "YouTube Documentary Series",
+                category: "long-form",
+                description: "60-minute documentary with cinematic quality",
+                icon: "🎥",
+                details: "A professionally produced long-form documentary featuring 4K quality, color grading, and cinematic transitions.",
+                videoUrl: "https://youtu.be/GfO-3Oir-qM",
+                tags: ["Documentary", "4K", "Cinematic"]
+            },
+            {
+                id: 4,
+                title: "Educational Series",
+                category: "long-form",
+                description: "12-part educational video series on professional skills",
+                icon: "📚",
+                details: "Engaging educational content that combines animation, graphics, and live footage for optimal learning experience.",
+                videoUrl: "https://youtu.be/2hXBW3wGECw",
+                tags: ["Educational", "Series", "Professional"]
+            },
+            {
+                id: 5,
+                title: "Gaming Montage Extreme",
+                category: "gaming",
+                description: "High-octane gaming montage with synchronized music",
+                icon: "🎮",
+                details: "Fast-paced gaming montage featuring pro players with cinematic effects, transitions, and beat-synchronized editing.",
+                videoUrl: "https://youtu.be/EQl82Hxn-H4",
+                tags: ["Gaming", "Montage", "Esports"]
+            },
+            {
+                id: 6,
+                title: "Gaming Highlights",
+                category: "gaming",
+                description: "Weekly gaming highlights compilation",
+                icon: "🏆",
+                details: "Weekly compilation of best gaming moments edited with dynamic transitions and engaging overlays.",
+                videoUrl: "https://youtu.be/IndfhqMJvYU",
+                tags: ["Gaming", "Highlights", "Weekly"]
+            },
+            {
+                id: 7,
+                title: "Football Goal Compilation",
+                category: "football",
+                description: "Epic football moments with slow-motion effects",
+                icon: "⚽",
+                details: "Stunning football edit featuring best goals of the season with slow-motion replays and dramatic music.",
+                videoUrl: "https://youtu.be/gavc-n3j1RI",
+                tags: ["Football", "Goals", "Sports"]
+            },
+            {
+                id: 8,
+                title: "Player Tribute Video",
+                category: "football",
+                description: "Emotional tribute to legendary football player",
+                icon: "🌟",
+                details: "Emotional and inspiring player tribute video combining best moments with motivational storytelling.",
+                videoUrl: "https://youtu.be/XR4zWhcazoA",
+                tags: ["Football", "Tribute", "Emotional"]
+            },
+            {
+                id: 9,
+                title: "Product Launch Ad",
+                category: "ecommerce",
+                description: "High-converting eCommerce product advertisement",
+                icon: "🛍️",
+                details: "Professional product showcase video optimized for conversion with compelling call-to-action and lifestyle shots.",
+                videoUrl: "https://youtu.be/2e0Nh25VvlY",
+                tags: ["eCommerce", "Product", "Sales"]
+            },
+            {
+                id: 10,
+                title: "Fashion Collection Showcase",
+                category: "ecommerce",
+                description: "Fashion brand collection video with model showcase",
+                icon: "👗",
+                details: "Stylish fashion collection video featuring models, lifestyle shots, and product close-ups.",
+                videoUrl: "https://youtu.be/oOd-nIZvrYQ",
+                tags: ["Fashion", "eCommerce", "Lifestyle"]
+            },
+            {
+                id: 11,
+                title: "Nature Documentary",
+                category: "documentary",
+                description: "Beautiful nature documentary with narration",
+                icon: "🌿",
+                details: "Cinematic nature documentary featuring wildlife, landscapes, and professional narration.",
+                videoUrl: "https://youtu.be/QqcGdA6kWD8",
+                tags: ["Nature", "Documentary", "Wildlife"]
+            },
+            {
+                id: 12,
+                title: "Travel Documentary",
+                category: "documentary",
+                description: "Travel vlog documentary series across 5 countries",
+                icon: "✈️",
+                details: "Epic travel documentary series combining cinematic footage, interviews, and cultural storytelling.",
+                videoUrl: "https://youtu.be/HvSztknhPqo",
+                tags: ["Travel", "Documentary", "Adventure"]
+            },
+            {
+                id: 13,
+                title: "Cinematic Color Grade",
+                category: "color-grading",
+                description: "Before and after color grading showcase",
+                icon: "🎨",
+                details: "Professional color grading transformation showing how the right color palette elevates the entire production.",
+                videoUrl: "https://youtu.be/0lxY5mk63yM",
+                tags: ["Color", "Grading", "Cinematic"]
+            },
+            {
+                id: 14,
+                title: "Music Video Color Work",
+                category: "color-grading",
+                description: "Music video with premium color grading",
+                icon: "🎵",
+                details: "Music video featuring creative color grading that matches the mood and energy of the song.",
+                videoUrl: "https://youtu.be/sUiUaPpIVPY",
+                tags: ["Music", "Color", "Creative"]
+            },
+            {
+                id: 15,
+                title: "Anime Fight Scene Edit",
+                category: "anime",
+                description: "Anime action sequence with dynamic transitions",
+                icon: "⚔️",
+                details: "Epic anime fight scene compilation with smooth transitions and beat-synchronized effects.",
+                videoUrl: "https://youtu.be/enw7RUQoEJE",
+                tags: ["Anime", "Action", "Edit"]
+            },
+            {
+                id: 16,
+                title: "Anime Love Story Montage",
+                category: "anime",
+                description: "Emotional anime romance montage",
+                icon: "💕",
+                details: "Beautiful anime romance montage combining heartfelt scenes with emotional music and transitions.",
+                videoUrl: "https://youtu.be/7be3PqTM1YE",
+                tags: ["Anime", "Romance", "Emotional"]
+            },
+            {
+                id: 17,
+                title: "Social Media Ad Campaign",
+                category: "ads",
+                description: "Complete ad campaign for brand awareness",
+                icon: "📢",
+                details: "Comprehensive ad campaign with multiple variations optimized for different social media platforms.",
+                videoUrl: "https://youtu.be/ONnqTFj_CqI",
+                tags: ["Ads", "Campaign", "Marketing"]
+            },
+            {
+                id: 18,
+                title: "Product Testimonial Ads",
+                category: "ads",
+                description: "Customer testimonial video ads",
+                icon: "⭐",
+                details: "Authentic customer testimonial videos that build trust and drive conversions.",
+                videoUrl: "https://youtu.be/HiA8R9ZzadQ",
+                tags: ["Ads", "Testimonial", "Trust"]
+            }
+        ];
+
+        // Initialize Portfolio
+        function initPortfolio() {
+            renderPortfolio('all');
+        }
+
+        // Render Portfolio Items
+        function renderPortfolio(category) {
+            const grid = document.getElementById('portfolioGrid');
+            grid.innerHTML = '';
+
+            let filteredData = portfolioData;
+            if (category !== 'all') {
+                filteredData = portfolioData.filter(item => item.category === category);
+            }
+
+            filteredData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'portfolio-card';
+                card.innerHTML = `
+                    <div class="portfolio-thumbnail">${item.icon}</div>
+                    <div class="portfolio-info">
+                        <div class="portfolio-category">${item.category.replace('-', ' ')}</div>
+                        <h3 class="portfolio-title">${item.title}</h3>
+                        <p class="portfolio-description">${item.description}</p>
+                        <div class="portfolio-tags">
+                            ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                card.addEventListener('click', () => openModal(item));
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter Portfolio
+        function filterPortfolio(category) {
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Filter and render
+            renderPortfolio(category);
+        }
+
+        // Modal Functions
+        function openModal(item) {
+            const modal = document.getElementById('videoModal');
+            document.getElementById('modalTitle').textContent = item.title;
+            
+            let videoHTML = '';
+            if (item.videoUrl) {
+                const embedUrl = convertToEmbedUrl(item.videoUrl);
+                videoHTML = `
+                    <iframe 
+                        width="100%" 
+                        height="450" 
+                        src="${embedUrl}?autoplay=0&rel=0" 
+                        title="${item.title}"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        allowfullscreen
+                        style="border-radius: 10px; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                    </iframe>
+                `;
+            }
+            
+            document.getElementById('modalBody').innerHTML = `
+                ${videoHTML}
+                <div style="font-size: 2rem; text-align: center; margin: 1rem 0;">${item.icon}</div>
+                <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">Category</h4>
+                <p style="margin-bottom: 1.5rem; color: #b0b0b0;">${item.category.replace('-', ' ')}</p>
+                <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">About This Project</h4>
+                <p style="margin-bottom: 1.5rem;">${item.details}</p>
+                <div style="background: var(--dark-bg); padding: 1.5rem; border-radius: 8px; border-left: 3px solid var(--accent-color);">
+                    <strong style="color: var(--accent-color);">Key Features & Skills:</strong>
+                    <div class="portfolio-tags" style="margin-top: 1rem;">
+                        ${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `;
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('videoModal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (event) => {
+            const modal = document.getElementById('videoModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with ESC key
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Smooth Scroll
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', initPortfolio);
+    </script>
+</body>
+</html>
